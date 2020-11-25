@@ -12,8 +12,7 @@ public static final String PERSISTENCE_UNIT_NAME = "salaodebeleza";
 	public static final Integer DIGITACAO_OK = 100;
 	public static final Integer CAMPO_VAZIO = 200;
 	
-	
-	
+	public static final String LIMPA_CAMPO = "";
 	
 public static boolean digitacaoCampo(Integer texto) {
 		
@@ -29,7 +28,7 @@ public static boolean digitacaoCampo(Integer texto) {
 	}
 	
 	public static boolean digitacaoCampo(String texto) {
-		
+			
 		if ( Objects.isNull(texto)) {
 			return true;
 		}
@@ -37,8 +36,11 @@ public static boolean digitacaoCampo(Integer texto) {
 		if ("".equals(texto.trim())){
 			return true;
 		}
-	
 		return false;
+	}
+	
+	public static Integer convertToInteger(String texto) {
+		return Integer.parseInt(texto);
 	}
 	
 }
