@@ -20,7 +20,7 @@ public class UsuarioTest {
 		usuario.setPassword("123456");
 		usuario.setEmail("naty.urenha@gmail.com");
 		usuario.setAtivo(false);
-		usuario.setAdmin(false);
+		
 
 		UsuarioService usuarioService = new UsuarioService();
 
@@ -37,8 +37,7 @@ public class UsuarioTest {
 		usuario.setPassword("12345678");
 		usuario.setEmail("igorsolfa@gmail.com");
 		usuario.setAtivo(false);
-		usuario.setAdmin(false);
-
+		
 		UsuarioService usuarioService1 = new UsuarioService();
 
 		usuarioService1.save(usuario);
@@ -58,7 +57,7 @@ public class UsuarioTest {
 		usuario.setPassword("14628");
 		usuario.setEmail("leila.urenha10@gmail.com");
 		usuario.setAtivo(false);
-		usuario.setAdmin(false);
+	
 
 		UsuarioService usuarioService2 = new UsuarioService();
 

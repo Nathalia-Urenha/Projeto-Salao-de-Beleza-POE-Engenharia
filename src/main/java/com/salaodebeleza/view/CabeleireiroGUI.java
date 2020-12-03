@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 
 
 
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -11,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.salaodebeleza.view.CabeleireiroGUI;
+import com.salaodebeleza.model.modells.Departamento;
 import com.salaodebeleza.estrutura.util.VariaveisProjeto;
 import com.salaodebeleza.model.modells.Usuario;
 import com.salaodebeleza.model.service.UsuarioService;
@@ -18,11 +20,14 @@ import com.salaodebeleza.model.service.UsuarioService;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
@@ -34,22 +39,25 @@ import java.awt.event.KeyEvent;
 
 public class CabeleireiroGUI extends JFrame {
 
+	private static final long serialVersionUID = 1867371822121507791L;
 	private JPanel contentPane;
 	private JTextField textFieldNome;
 	private JTextField textFieldEmail;
-	private JPasswordField passwordFieldSenha;
 	private JButton btnIncluir;
 	private JButton btnAlterar;
 	private JButton btnExcluir;
+	private JRadioButton rdbtnAtivo;
 	private JButton btnSair;
+	private JPasswordField passwordFieldSenha;
 	private JLabel lblCodigo;
 	private JTextField textFieldCodigo;
-	private JRadioButton rdbtnAtivo;
+
 	private JLabel checkNome;
 	private JLabel checkEmail;
 	private JLabel checkSenha;
 
 	private boolean status = true; 
+
 
 	/**
 	 * Launch the application.
@@ -71,28 +79,31 @@ public class CabeleireiroGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public CabeleireiroGUI() {
-		setTitle("Cadastro de Cabeleireiro");
+		setTitle("Cadastro de Usu\u00E1rios");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 559, 422);
+		setBounds(100, 100, 690, 414);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
-		JLabel lblNome = new JLabel("Nome: ");
+		JLabel lblNome = new JLabel("Nome:");
 
 		textFieldNome = new JTextField();
 
+
 		textFieldNome.setColumns(10);
 
-		JLabel lblEmail = new JLabel("E-mail: ");
+		JLabel lblEmail = new JLabel("E-mail:");
 
 		textFieldEmail = new JTextField();
 
+
 		textFieldEmail.setColumns(10);
 
-		JLabel lblSenha = new JLabel("Senha: ");
+		JLabel lblSenha = new JLabel("Senha:");
+		lblSenha.setHorizontalAlignment(SwingConstants.TRAILING);
 
-		passwordFieldSenha = new JPasswordField();
+		rdbtnAtivo = new JRadioButton("Ativo");
 
 		btnIncluir = new JButton("Incluir");
 		btnIncluir.setIcon(new ImageIcon(CabeleireiroGUI.class.getResource("/com/salaodebeleza/estrutura/imagens/application_add.png")));
@@ -104,16 +115,19 @@ public class CabeleireiroGUI extends JFrame {
 		btnExcluir = new JButton("Excluir");
 		btnExcluir.setIcon(new ImageIcon(CabeleireiroGUI.class.getResource("/com/salaodebeleza/estrutura/imagens/application_delete.png")));
 
+
 		btnSair = new JButton("Sair");
 		btnSair.setIcon(new ImageIcon(CabeleireiroGUI.class.getResource("/com/salaodebeleza/estrutura/imagens/sair.png")));
 
-		lblCodigo = new JLabel("Codigo: ");
+		passwordFieldSenha = new JPasswordField();
+
+		lblCodigo = new JLabel("C\u00F3digo: ");
 
 		textFieldCodigo = new JTextField();
 
-		textFieldCodigo.setColumns(10);
 
-		rdbtnAtivo = new JRadioButton("Ativo");
+
+		textFieldCodigo.setColumns(10);
 
 		checkNome = new JLabel("");
 		checkNome.setIcon(new ImageIcon(CabeleireiroGUI.class.getResource("/com/salaodebeleza/estrutura/imagens/ok.png")));
@@ -129,67 +143,70 @@ public class CabeleireiroGUI extends JFrame {
 		gl_contentPane.setHorizontalGroup(
 				gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-						.addContainerGap(114, Short.MAX_VALUE)
+						.addGap(74)
 						.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addComponent(lblEmail)
-								.addComponent(lblNome)
+								.addComponent(lblCodigo)
 								.addComponent(lblSenha)
-								.addComponent(lblCodigo))
-						.addPreferredGap(ComponentPlacement.UNRELATED)
+								.addComponent(lblEmail)
+								.addComponent(lblNome))
+						.addPreferredGap(ComponentPlacement.RELATED)
 						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(rdbtnAtivo)
-								.addGroup(gl_contentPane.createSequentialGroup()
-										.addComponent(btnIncluir)
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(btnAlterar)
-										.addPreferredGap(ComponentPlacement.UNRELATED)
-										.addComponent(btnExcluir)
-										.addPreferredGap(ComponentPlacement.UNRELATED)
-										.addComponent(btnSair))
 								.addGroup(gl_contentPane.createSequentialGroup()
 										.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-												.addComponent(textFieldEmail, GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
-												.addComponent(textFieldNome)
+												.addGroup(gl_contentPane.createSequentialGroup()
+														.addComponent(btnIncluir)
+														.addGap(18)
+														.addComponent(btnAlterar)
+														.addGap(18)
+														.addComponent(btnExcluir)
+														.addGap(18)
+														.addComponent(btnSair))
+												.addGroup(gl_contentPane.createSequentialGroup()
+														.addComponent(rdbtnAtivo)
+														.addGap(18))
+												.addComponent(textFieldEmail, GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+												.addComponent(textFieldNome, GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
 												.addComponent(passwordFieldSenha))
-										.addPreferredGap(ComponentPlacement.RELATED)
+										.addPreferredGap(ComponentPlacement.UNRELATED)
 										.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 												.addComponent(checkSenha)
 												.addComponent(checkEmail)
 												.addComponent(checkNome)))
-								.addComponent(textFieldCodigo, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(103, Short.MAX_VALUE))
+								.addComponent(textFieldCodigo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addContainerGap(116, Short.MAX_VALUE))
 				);
 		gl_contentPane.setVerticalGroup(
 				gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-						.addContainerGap(32, Short.MAX_VALUE)
+						.addGap(62)
 						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(textFieldCodigo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblCodigo))
-						.addGap(16)
+								.addComponent(lblCodigo)
+								.addComponent(textFieldCodigo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGap(18)
 						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblNome)
 								.addComponent(textFieldNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(checkNome))
-						.addGap(18)
+						.addGap(26)
 						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblEmail)
 								.addComponent(textFieldEmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(checkEmail))
+						.addGap(26)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblSenha)
+								.addComponent(passwordFieldSenha, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(checkSenha))
 						.addGap(18)
 						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(passwordFieldSenha, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblSenha)
-								.addComponent(checkSenha))
-						.addGap(27)
-						.addComponent(rdbtnAtivo)
+								.addComponent(rdbtnAtivo))
 						.addGap(18)
 						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(btnIncluir)
 								.addComponent(btnAlterar)
 								.addComponent(btnExcluir)
 								.addComponent(btnSair))
-						.addContainerGap(118, Short.MAX_VALUE))
+						.addContainerGap(71, Short.MAX_VALUE))
 				);
 		contentPane.setLayout(gl_contentPane);
 		createEvents();
@@ -275,7 +292,7 @@ public class CabeleireiroGUI extends JFrame {
 		if (status == false ) {
 			checkSenha.setIcon(new ImageIcon(CabeleireiroGUI.class.getResource("/com/salaodebeleza/estrutura/imagens/iconFechar.png")));
 		} else {
-			checkSenha.setIcon(new ImageIcon(CabeleireiroGUI.class.getResource("/com/salaodebelezax/estrutura/imagens/ok.png")));
+			checkSenha.setIcon(new ImageIcon(CabeleireiroGUI.class.getResource("/com/salaodebeleza/estrutura/imagens/ok.png")));
 		}
 	}
 
@@ -286,24 +303,26 @@ public class CabeleireiroGUI extends JFrame {
 	}
 	///////////////////////////////////////////////////////////////////
 
+
+
 	private void createEvents() {
 
 		/////////////////////ACTION LISTENER///////////////
 		btnIncluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				incluirCab();
+				incluir();
 			}
 		});
 
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				alterarCab();
+				alterar();
 			}
 		});
 
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				excluirCab();
+				excluir();
 			}
 		});
 
@@ -314,13 +333,14 @@ public class CabeleireiroGUI extends JFrame {
 		});
 
 		///////////////////FOCUS////////////////////////////////
-		textFieldCodigo.addFocusListener(new FocusAdapter() {
 
-			@Override public void focusLost(FocusEvent e){
-				buscarUsuario();
-			} 
-		});
-
+		
+		/*
+		 * textFieldCodigo.addFocusListener(new FocusAdapter() {
+		 * 
+		 * @Override public void focusLost(FocusEvent e){ buscarUsuario(); } });
+		 */
+		 
 		textFieldNome.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -332,39 +352,37 @@ public class CabeleireiroGUI extends JFrame {
 			}
 		});
 
-		textFieldEmail.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if ( verificaDigitacaoDoEmail() ) {
-					textFieldEmail.requestFocus();	
-				} else {
-					digitacaoEmailValido();
-				}
+		/*
+		 * textFieldEmail.addFocusListener(new FocusAdapter() {
+		 * 
+		 * @Override public void focusLost(FocusEvent e) { if (
+		 * verificaDigitacaoDoEmail() ) { textFieldEmail.requestFocus(); } else {
+		 * digitacaoEmailValido(); }
+		 * 
+		 * } });
+		 */
 
-			}
-		});
-
-		passwordFieldSenha.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if ( verificaDigitacaoSenha() ) {
-					passwordFieldSenha.requestFocus();	
-				} else {
-					digitacaoSenhaValida();
-				}
-			}
-		});
+		/*
+		 * passwordFieldSenha.addFocusListener(new FocusAdapter() {
+		 * 
+		 * @Override public void focusLost(FocusEvent e) { if ( verificaDigitacaoSenha()
+		 * ) { passwordFieldSenha.requestFocus(); } else { digitacaoSenhaValida(); } }
+		 * });
+		 */
 
 		////////////////KEY PRESSED///////////////////////////////
-		textFieldCodigo.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if ( e.getKeyCode() == KeyEvent.VK_ENTER) {
-					buscarUsuario();
-					textFieldNome.requestFocus();
-				}
-			}
-		});
+		
+		  textFieldCodigo.addKeyListener(new KeyAdapter() {
+		  
+		  @Override 
+		  public void keyPressed(KeyEvent e) { 
+			  if ( e.getKeyCode() == KeyEvent.VK_ENTER) { 
+				  buscarUsuario(); 
+				  textFieldNome.requestFocus(); 
+				  } 
+			  } 
+		  });
+		 
 
 		textFieldNome.addKeyListener(new KeyAdapter() {
 			@Override
@@ -403,7 +421,6 @@ public class CabeleireiroGUI extends JFrame {
 					} else {
 						digitacaoSenhaValida();
 					}	
-					rdbtnAtivo.requestFocus();
 				}
 			}
 		});
@@ -412,31 +429,99 @@ public class CabeleireiroGUI extends JFrame {
 
 
 	////////////////////////////////////////////////////////////////////
-	private void incluirCab() {
+	private void incluir() {
+		
+		Integer toReturn = 0;
+		
 		Usuario usuario = pegarDadosUsuario();
 
 		UsuarioService usuarioService = new UsuarioService();
+		
+		Departamento departamento = new Departamento();
 
-		usuarioService.save(usuario);
+		toReturn = usuarioService.save(usuario);
+		
+		if(toReturn == VariaveisProjeto.NOME_CAMPO_VAZIO)
+		{
+			status = false;
+			mudaStatusCheckNome();
+			showMensagem("O campo Nome deve ser informado", "Erro", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		if(toReturn == VariaveisProjeto.ERRO_INCLUSAO)
+		{
+			showMensagem("Erro na inclusão do registro, verifique com seu administrador!!", "Erro", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		if(toReturn == VariaveisProjeto.INCLUSAO_REALIZADA)
+		{
+			showMensagem("Inclusão realizada com sucesso!!", "OK", JOptionPane.YES_OPTION);
+			
+			limpaTextoCampo();
+			
+			usuario = new Usuario();
+			
+		}
+	
 
 	}
 
 
-	protected void excluirCab() {
+	protected void excluir() {
+		
+		Integer toReturn = 0;
 		Usuario usuario = pegarDadosUsuario();
 
 		UsuarioService usuarioService = new UsuarioService();
 
-		usuarioService.delete(usuario);
+		toReturn = usuarioService.delete(usuario);
+		
+		if(toReturn == VariaveisProjeto.ERRO_EXCLUSAO)
+		{
+			showMensagem("Erro na exclusão do registro, verifique com seu administrador!!", "Erro", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		if(toReturn == VariaveisProjeto.EXCLUSAO_REALIZADA)
+		{
+			showMensagem("Exclusão realizada com sucesso!!", "OK", JOptionPane.OK_OPTION);
+			
+			limpaTextoCampo();
+			
+			usuario = new Usuario();
+		}
 
 	}
 
-	protected void alterarCab() {
+	protected void alterar() {
+		
+		Integer toReturn = 0;
 		Usuario usuario = pegarDadosUsuario();
 
 		UsuarioService usuarioService = new UsuarioService();
 
-		usuarioService.update(usuario);
+		toReturn = usuarioService.update(usuario);
+		
+		
+		if(toReturn == VariaveisProjeto.ERRO_ALTERACAO)
+		{
+			showMensagem("Erro na alteração do registro, verifique com seu administrador!!", "Erro", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		if(toReturn == VariaveisProjeto.ALTERACAO_REALIZADA)
+		{
+			showMensagem("Alteração realizada com sucesso!!", "OK", JOptionPane.OK_OPTION);
+			
+			limpaTextoCampo();
+			
+			usuario = new Usuario();
+		}
+		
+		
+	}
+	
+	private void showMensagem(String mensagem, String status, int option)
+	{
+		JOptionPane.showMessageDialog(null, mensagem, status, option);
 	}
 
 	@SuppressWarnings("deprecation")
