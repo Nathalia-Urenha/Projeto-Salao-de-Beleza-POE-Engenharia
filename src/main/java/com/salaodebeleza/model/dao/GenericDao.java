@@ -56,7 +56,11 @@ private EntityManager entityManager;
     }
     
     
-    
+    public Integer countTotalRegister(Class<T> classe) {
+		Query query = this.getEntityManager().createQuery("SELECT count(o) FROM "+classe.getSimpleName()+" o");
+		Long total = (Long) query.getSingleResult();
+		return total.intValue();
+	}
     
 	public EntityManager getEntityManager() {
 		return entityManager;

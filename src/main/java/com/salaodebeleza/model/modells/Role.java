@@ -3,6 +3,8 @@ package com.salaodebeleza.model.modells;
 import java.util.List;
 
 
+
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +12,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.salaodebeleza.model.modells.Role;
+
 
 @Entity
 @Table(name="TAB_ROLE")
@@ -90,4 +95,3 @@ public class Role {
 	
 
 }
-

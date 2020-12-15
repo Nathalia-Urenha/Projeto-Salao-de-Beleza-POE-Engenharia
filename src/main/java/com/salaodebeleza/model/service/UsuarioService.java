@@ -45,9 +45,7 @@ public class UsuarioService extends ConexaoBancoService {
 			} finally {
 				this.close();
 			}
-		} else {
-			toReturn = VariaveisProjeto.NOME_CAMPO_VAZIO;
-		}
+		} 
 		return toReturn; 
 	}
 
@@ -79,9 +77,7 @@ public class UsuarioService extends ConexaoBancoService {
 			} finally {
 				this.close();
 			}
-		} else {
-			toReturn = VariaveisProjeto.NOME_CAMPO_VAZIO;
-		}
+		} 
 		return toReturn; 
 	}
 
@@ -129,7 +125,13 @@ public class UsuarioService extends ConexaoBancoService {
 	public Integer validarDigitacao(Usuario usuario) {
 
 		if ( VariaveisProjeto.digitacaoCampo(usuario.getUsername())) {
-			return VariaveisProjeto.NOME_CAMPO_VAZIO;
+			return VariaveisProjeto.USUARIO_USER_NAME;
+		}
+		if ( VariaveisProjeto.digitacaoCampo(usuario.getEmail())) {
+			return VariaveisProjeto.USUARIO_EMAIL;
+		}
+		if ( VariaveisProjeto.digitacaoCampo(usuario.getPassword())) {
+			return VariaveisProjeto.USUARIO_PASSWORD;
 		}
 		return VariaveisProjeto.DIGITACAO_OK;
 	}
@@ -138,5 +140,15 @@ public class UsuarioService extends ConexaoBancoService {
 	public UsuarioDao getUsuarioDao() {
 		return usuarioDao;
 	}
+	
+	public Integer countTotalRegister() {
+		return usuarioDao.countTotalRegister(Usuario.class);
+	}
+
+	public List<Usuario> listUsuarioPaginacao(Integer numeroPagina, Integer defaultPagina) {
+		
+		return usuarioDao.listUsuarioPaginacao(numeroPagina,defaultPagina);
+	}
+	
 
 }
