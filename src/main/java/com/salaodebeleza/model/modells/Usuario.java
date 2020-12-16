@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -25,8 +26,12 @@ public class Usuario {
 	private String  password;
 	private boolean ativo = true;
 	
-	private Departamento departamento;
-	private List<Role> roles;
+	//um para muitos
+	private List<Produtos> produtos;
+	private List<Cliente>  clientes;
+	private List<Procedimentos> procedimentos;
+	private List<Agendamento> agendamento;
+
 
 
 	@Id
@@ -77,29 +82,54 @@ public class Usuario {
 		this.ativo = ativo;
 	}
 	
+//////////////////////RELACIONAMENTOS///////////////////////////////
 	
-//RELACIONAMENTO - MUITOS PARA UM
-	@ManyToOne
-//	@JoinColumn(name="DEPARTAMENTO_ID", nullable=false)
-	public Departamento getDepartamento() {
-		return departamento;
+	//UM PARA MUITOS
+	@OneToMany(mappedBy="usuario")
+	public List<Produtos> getProdutos(){
+		return produtos;
 	}
 
-	public void setDepartamento(Departamento departamento) {
-		this.departamento = departamento;
+	public void setProdutos(List<Produtos> produtos){
+		this.produtos = produtos;
 	}
 	
-//MUITOS PARA MUITOS	
-	@ManyToMany
-	@JoinTable(name="TAB_USUARIO_ROLE", joinColumns = @JoinColumn(name="USUARIO_ID"),
-	inverseJoinColumns = @JoinColumn(name="ROLE_ID"))
-	public List<Role> getRoles() {
-		return roles;
+	//UM PARA MUITOS
+	@OneToMany(mappedBy="usuario")
+	public List<Cliente> getClientes() {
+		return clientes;
 	}
 
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
+	public void setClientes(List<Cliente> clientes) {
+		this.clientes = clientes;
 	}
+	
+	
+	//UM PARA MUITOS
+	@OneToMany(mappedBy="usuario")
+	public List<Procedimentos> getProcedimentos() {
+			return procedimentos;
+	}
+	
+	public void setProcedimentos(List<Procedimentos> procedimentos) {
+		this.procedimentos = procedimentos;
+	}
+	
+	//UM PARA MUITOS
+	@OneToMany(mappedBy="usuario")
+	public List<Agendamento> getAgendamento() {
+		return agendamento;
+	}
+
+	public void setAgendamento(List<Agendamento> agendamento) {
+		this.agendamento = agendamento;
+	}
+	
+
+/////////////////////////////////////////////////////////////////////
+
+	
+
 
 	@Override
 	public int hashCode() {

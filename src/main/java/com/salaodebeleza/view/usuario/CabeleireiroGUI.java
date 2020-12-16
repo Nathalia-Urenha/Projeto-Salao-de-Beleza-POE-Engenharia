@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.salaodebeleza.model.modells.Departamento;
+import com.salaodebeleza.model.modells.Produtos;
 import com.salaodebeleza.view.usuario.CabeleireiroGUI;
 import com.salaodebeleza.estrutura.util.VariaveisProjeto;
 import com.salaodebeleza.model.modells.Usuario;
@@ -48,8 +48,6 @@ public class CabeleireiroGUI extends JDialog {
 	private JPasswordField passwordFieldSenha;
 	private JLabel lblCodigo;
 	private JTextField textFieldCodigo;
-	private JTextField textFieldNomeDepartamento;
-	private JLabel lblDepartamento;
 	private JLabel lblNome;
 	private JLabel lblSenha;
 
@@ -140,15 +138,9 @@ public class CabeleireiroGUI extends JDialog {
 		checkSenha = new JLabel("");
 		checkSenha.setIcon(new ImageIcon(CabeleireiroGUI.class.getResource("/com/salaodebeleza/estrutura/imagens/ok.png")));
 		
-		lblDepartamento = new JLabel("Departamento:");
-		
-		textFieldNomeDepartamento = new JTextField();
-		textFieldNomeDepartamento.setEditable(false);
-		textFieldNomeDepartamento.setColumns(10);
-		
 		JButton btnNewButton = new JButton("");
 		btnNewButton.setMnemonic(KeyEvent.VK_D);
-		btnNewButton.setToolTipText("Buscar Departamento");
+		btnNewButton.setToolTipText("Buscar produtos");
 		btnNewButton.setIcon(new ImageIcon(CabeleireiroGUI.class.getResource("/com/salaodebeleza/estrutura/imagens/search.png")));
 
 
@@ -156,18 +148,14 @@ public class CabeleireiroGUI extends JDialog {
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(68)
+					.addGap(75)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblDepartamento)
 						.addComponent(lblCodigo)
 						.addComponent(lblSenha)
 						.addComponent(lblEmail)
 						.addComponent(lblNome))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(rdbtnAtivo)
-							.addGap(18))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(btnIncluir)
 							.addGap(18)
@@ -176,10 +164,10 @@ public class CabeleireiroGUI extends JDialog {
 							.addComponent(btnExcluir)
 							.addGap(18)
 							.addComponent(btnSair))
+						.addComponent(rdbtnAtivo)
 						.addComponent(textFieldCodigo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(textFieldNomeDepartamento, Alignment.LEADING)
 								.addComponent(textFieldEmail, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
 								.addComponent(textFieldNome, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
 								.addComponent(passwordFieldSenha, Alignment.LEADING))
@@ -189,7 +177,7 @@ public class CabeleireiroGUI extends JDialog {
 								.addComponent(checkSenha)
 								.addComponent(checkEmail)
 								.addComponent(checkNome))))
-					.addContainerGap(105, Short.MAX_VALUE))
+					.addContainerGap(171, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -214,13 +202,8 @@ public class CabeleireiroGUI extends JDialog {
 						.addComponent(passwordFieldSenha, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(checkSenha))
 					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(btnNewButton, 0, 0, Short.MAX_VALUE)
-						.addGroup(Alignment.LEADING, gl_contentPane.createParallelGroup(Alignment.BASELINE)
-							.addComponent(lblDepartamento)
-							.addComponent(textFieldNomeDepartamento)))
-					.addPreferredGap(ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 0, GroupLayout.PREFERRED_SIZE)
 						.addComponent(rdbtnAtivo))
 					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
@@ -228,7 +211,7 @@ public class CabeleireiroGUI extends JDialog {
 						.addComponent(btnAlterar)
 						.addComponent(btnExcluir)
 						.addComponent(btnSair))
-					.addGap(25))
+					.addContainerGap(69, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
 		createEvents();
@@ -502,13 +485,6 @@ public class CabeleireiroGUI extends JDialog {
 		Integer toReturn = 0;
 		
 		Usuario usuario = pegarDadosUsuario();
-
-		Departamento departamento = new Departamento();
-		
-		departamento.setId(1);
-		departamento.setNome("Vendas");
-		
-		usuario.setDepartamento(departamento);
 		
 		UsuarioService usuarioService = new UsuarioService();
 		
@@ -537,10 +513,10 @@ public class CabeleireiroGUI extends JDialog {
 		
 		Usuario usuario = pegarDadosUsuario();
 		
-		Departamento departamento = new Departamento();
+		Produtos produtos = new Produtos();
 		
-		departamento.setId(1);
-		departamento.setNome("Vendas");
+		produtos.setId(1);
+		produtos.setNome("Vendas");
 		
 		UsuarioService usuarioService = new UsuarioService();
 		
@@ -564,12 +540,6 @@ public class CabeleireiroGUI extends JDialog {
 		Integer toReturn = 0;
 		
 	    Usuario usuario = pegarDadosUsuario();
-	    
-	    Departamento departamento = new Departamento();
-		
-		departamento.setId(1);
-		departamento.setNome("Vendas");
-		usuario.setDepartamento(departamento);
 	    
 	    UsuarioService usuarioService = new UsuarioService();
 		

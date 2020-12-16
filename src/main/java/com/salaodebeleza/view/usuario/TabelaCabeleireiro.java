@@ -108,7 +108,7 @@ public class TabelaCabeleireiro extends JInternalFrame {
 	public TabelaCabeleireiro() {
 
 		initComponents();
-		iniciaPaginacao();
+	//	iniciaPaginacao();
 	}
 	
 	private void initComponents() {
