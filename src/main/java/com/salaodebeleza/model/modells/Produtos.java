@@ -102,9 +102,7 @@ public class Produtos {
 	}
 	
 	//MUITOS PARA MUITOS
-	@ManyToMany
-	@JoinTable(name = "TAB_PRODUTOS_AGENDAMENTO", joinColumns = @JoinColumn(name = "PRODUTOS_ID"),
-	inverseJoinColumns = @JoinColumn(name="AGENDAMENTO_ID"))
+	@ManyToMany(mappedBy="produtos")
 	public List<Agendamento> getAgendamento() {
 		return agendamento;
 	}

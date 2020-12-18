@@ -1,6 +1,10 @@
 package com.salaodebeleza.estrutura.util;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+
+import com.salaodebeleza.model.modells.Procedimentos;
 
 public class VariaveisProjeto {
 	
@@ -27,8 +31,29 @@ public class VariaveisProjeto {
 	public static final Integer USUARIO_EMAIL = 202;
 	public static final Integer USUARIO_PASSWORD = 203;
 	
-	//classe departamento
-	public static final Integer DEPARTAMENTO_NOME = 300;
+	
+	//classe cliente
+	public static final Integer CLIENTE_NOME = 204;
+	public static final Integer CLIENTE_TELEFONE = 205;
+	public static final Integer CLIENTE_ANOTACOES = 206;
+	
+	
+	//classe procedimentos
+	public static final Integer PROCEDIMENTO_NOME = 207;
+	
+	//classe produtos
+	public static final Integer PRODUTO_NOME = 208;
+	public static final Integer PRODUTO_VALOR = 209;
+	public static final Integer PRODUTO_QTD = 210;
+	
+	//classe agendamento
+	public static final Integer AGENDAMENTO_DATA = 211;
+	public static final Integer AGENDAMENTO_HORA = 212;
+	public static final Integer AGENDAMENTO_PROCEDIMENTO = 213;
+	public static final Integer VALOR_PROCEDIMENTO = 214;
+	public static final Integer VALOR_PRODUTO = 215;
+	public static final Integer VALOR_TOTAL = 216;
+	
 	
 
 	public static final String LIMPA_CAMPO = "";
@@ -57,10 +82,39 @@ public class VariaveisProjeto {
 		}
 		return false;
 	}
+	
+	public static boolean digitacaoCampo(Float texto) {
 
+		if ( Objects.isNull(texto)) {
+			return true;
+		}
+
+		if ("".equals(String.valueOf(texto))){
+			return true;
+		}
+
+		return false;
+	}
+	
+	public static boolean digitacaoCampo(Date texto) {
+
+		if ( Objects.isNull(texto)) {
+			return true;
+		}
+
+		if ("".equals(String.valueOf(texto))){
+			return true;
+		}
+
+		return false;
+	}
+	
+	
 	public static Integer convertToInteger(String texto) {
 		return Integer.parseInt(texto);
 	}
+
+	
 	
 	
 }

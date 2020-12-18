@@ -69,9 +69,7 @@ public class Procedimentos {
 	}
 	
 	//MUITOS PARA MUITOS
-	@ManyToMany
-	@JoinTable(name = "TAB_PROCEDIMENTOS_AGENDAMENTO", joinColumns = @JoinColumn(name = "PROCEDIMENTOS_ID"),
-	inverseJoinColumns = @JoinColumn(name="AGENDAMENTO_ID"))
+	@ManyToMany(mappedBy="procedimentos")
 	public List<Agendamento> getAgendamento() {
 		return agendamento;
 	}

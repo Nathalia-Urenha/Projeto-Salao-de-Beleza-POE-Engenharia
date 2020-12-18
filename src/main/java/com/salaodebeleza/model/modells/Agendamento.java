@@ -4,13 +4,18 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="TAB_AGENDAMENTO")
 public class Agendamento {
 	
 	private Integer id;
@@ -101,7 +106,7 @@ public class Agendamento {
 
 ///////////////////////RELACIONAMENTOS//////////////////////
 	
-	//MUITOS PARA UM
+	//MUITOS PARA UM - CLIENTE
 	@ManyToOne
 	@JoinColumn(name = "CLIENTE_ID", nullable = false)
 	public Cliente getCliente() {
@@ -112,7 +117,7 @@ public class Agendamento {
 		this.cliente = cliente;
 	}
 	
-	//MUITOS PARA UM
+	//MUITOS PARA UM - USUARIO
 	@ManyToOne
 	@JoinColumn(name = "USUARIO_ID", nullable = false)
 	public Usuario getUsuario() {
@@ -123,8 +128,10 @@ public class Agendamento {
 		this.usuario = usuario;
 	}
 	
-	//MUITOS PARA MUITOS
-	@ManyToMany(mappedBy="agendamento")
+	//MUITOS PARA MUITOS - PROCEDIMENTOS
+	@ManyToMany
+	@JoinTable(name = "TAB_PROCEDIMENTOS_AGENDAMENTO", joinColumns = @JoinColumn(name = "AGENDAMENTO_ID"),
+	inverseJoinColumns = @JoinColumn(name="PROCEDIMENTO_ID"))
 	public List<Procedimentos> getProcedimentos() {
 		return procedimentos;
 	}
@@ -133,8 +140,10 @@ public class Agendamento {
 		this.procedimentos = procedimentos;
 	}
 	
-	//MUITOS PARA MUITOS
-	@ManyToMany(mappedBy="agendamento")
+	//MUITOS PARA MUITOS - PRODUTOS
+	@ManyToMany
+	@JoinTable(name = "TAB_PRODUTOS_AGENDAMENTO", joinColumns = @JoinColumn(name = "AGENDAMENTO_ID"),
+	inverseJoinColumns = @JoinColumn(name="PRODUTO_ID"))
 	public List<Produtos> getProdutos() {
 		return produtos;
 	}

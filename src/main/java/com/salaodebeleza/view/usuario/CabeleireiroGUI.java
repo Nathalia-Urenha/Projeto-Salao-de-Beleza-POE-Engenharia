@@ -76,7 +76,7 @@ public class CabeleireiroGUI extends JDialog {
 		this.acao = acao;
 	
 		
-		setTitle("Cadastro de Usuário");
+		setTitle("Cadastro de Cabeleireiro(a)");
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 690, 414);
 		contentPane = new JPanel();

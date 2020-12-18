@@ -20,6 +20,7 @@ public class Cliente {
 	private String nome;
 	private String telefone;
 	private String anotacoes;
+	private boolean ativo = true;
 	
 	//muitos para um
 	private Usuario usuario;
@@ -76,6 +77,15 @@ public class Cliente {
 		this.anotacoes = anotacoes;
 	}
 	
+	@Column(nullable = false )
+	public boolean isAtivo() {
+		return ativo;
+	}
+	
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+	
 ////////////////////////////RELACIONAMENTOS///////////////////////////////////	
 	//MUITOS PARA UM
 	@ManyToOne
@@ -89,7 +99,7 @@ public class Cliente {
 	}
 	
 	
-	//UM PARA MUITOS
+	//UM PARA MUITOS - AGENDAMENTO
 	@OneToMany(mappedBy="cliente")
 	public List<Agendamento> getAgendamento() {
 		return agendamento;
@@ -130,8 +140,10 @@ public class Cliente {
 
 	@Override
 	public String toString() {
-		return "Cliente [id=" + id + ", nome=" + nome + ", telefone=" + telefone + ", anotacoes=" + anotacoes+ "]";
+		return "Cliente [id=" + id + ", nome=" + nome + ", telefone=" + telefone + ", anotacoes=" + anotacoes
+				+ ", ativo=" + ativo + ", usuario=" + usuario + ", agendamento=" + agendamento + "]";
 	}
+
 	
 
 	

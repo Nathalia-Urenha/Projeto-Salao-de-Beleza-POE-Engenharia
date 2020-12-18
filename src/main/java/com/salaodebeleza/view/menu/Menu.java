@@ -17,6 +17,8 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.EmptyBorder;
 
 import com.salaodebeleza.main.Login;
+import com.salaodebeleza.view.cliente.TabelaCliente;
+import com.salaodebeleza.view.produtos.TabelaProdutos;
 import com.salaodebeleza.view.usuario.TabelaCabeleireiro;
 
 public class Menu extends JFrame {
@@ -35,6 +37,8 @@ public class Menu extends JFrame {
 	private Login login;
 	private JMenu mnSair;
 	private JMenuItem mntmSairSistema;
+	private JMenuItem mntmCliente;
+	private JMenuItem mntmProdutos;
 
 	/**
 	 * Launch the application.
@@ -59,6 +63,14 @@ public class Menu extends JFrame {
 		
 		mnArquivo = new JMenu("Arquivo");
 		menuBar.add(mnArquivo);
+		
+		mntmProdutos = new JMenuItem("Produtos");
+		
+		mnArquivo.add(mntmProdutos);
+		
+		mntmCliente = new JMenuItem("Cliente");
+		
+		mnArquivo.add(mntmCliente);
 		
 		mntmUsuario = new JMenuItem("Usu\u00E1rio");
 		
@@ -122,6 +134,22 @@ public class Menu extends JFrame {
 		mntmSairSistema.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
+			}
+		});
+		
+		mntmCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TabelaCliente tabelaCliente = new TabelaCliente();
+				contentPane.add(tabelaCliente);
+				tabelaCliente.setVisible(true);
+			}
+		});
+		
+		mntmProdutos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TabelaProdutos tabelaProdutos = new TabelaProdutos();
+				contentPane.add(tabelaProdutos);
+				tabelaProdutos.setVisible(true);
 			}
 		});
 		
