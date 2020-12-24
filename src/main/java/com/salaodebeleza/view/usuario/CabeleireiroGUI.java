@@ -541,6 +541,7 @@ public class CabeleireiroGUI extends JDialog {
 		
 	    Usuario usuario = pegarDadosUsuario();
 	    
+	    
 	    UsuarioService usuarioService = new UsuarioService();
 		
 		toReturn = usuarioService.update(usuario);

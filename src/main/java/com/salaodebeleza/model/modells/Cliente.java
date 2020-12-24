@@ -99,15 +99,15 @@ public class Cliente {
 	}
 	
 	
-	//UM PARA MUITOS - AGENDAMENTO
-	@OneToMany(mappedBy="cliente")
-	public List<Agendamento> getAgendamento() {
-		return agendamento;
-	}
-
-	public void setAgendamento(List<Agendamento> agendamento) {
-		this.agendamento = agendamento;
-	}
+	/*
+	 * //UM PARA MUITOS - AGENDAMENTO
+	 * 
+	 * @OneToMany(mappedBy="cliente") public List<Agendamento> getAgendamento() {
+	 * return agendamento; }
+	 * 
+	 * public void setAgendamento(List<Agendamento> agendamento) { this.agendamento
+	 * = agendamento; }
+	 */
 	
 /////////////////////////////////////////////////////////////////////////	
 

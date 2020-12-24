@@ -26,8 +26,10 @@ import javax.swing.border.EmptyBorder;
 
 import com.salaodebeleza.estrutura.util.VariaveisProjeto;
 import com.salaodebeleza.model.modells.Cliente;
-
+import com.salaodebeleza.model.modells.Usuario;
 import com.salaodebeleza.model.service.ClienteService;
+import com.salaodebeleza.model.service.UsuarioService;
+import com.salaodebeleza.view.usuario.BuscaCabeleireiro;
 
 
 public class ClienteGUI extends JDialog {
@@ -62,6 +64,11 @@ public class ClienteGUI extends JDialog {
 	
 	private int linha =0;
 	private int acao = 0;
+	private JTextField textFieldCabeleireiro;
+	private JLabel lblCabeleireiro;
+	private JButton btnBuscaCabeleireiro;
+	
+	private Usuario cabeleireiro;
 	private JTextField textFieldAnotacoes;
 	
 	/**
@@ -79,7 +86,7 @@ public class ClienteGUI extends JDialog {
 		
 		setTitle("Cadastro de Cliente");
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 690, 414);
+		setBounds(100, 100, 690, 374);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -142,8 +149,19 @@ public class ClienteGUI extends JDialog {
 		btnNewButton.setToolTipText("Buscar produtos");
 		btnNewButton.setIcon(new ImageIcon(ClienteGUI.class.getResource("/com/salaodebeleza/estrutura/imagens/search.png")));
 		
-		textFieldAnotacoes = new JTextField();
+		lblCabeleireiro = new JLabel("Cabeleireiro(a):");
 		
+		textFieldCabeleireiro = new JTextField();
+		textFieldCabeleireiro.setEditable(false);
+		textFieldCabeleireiro.setColumns(10);
+		
+		btnBuscaCabeleireiro = new JButton("");
+		btnBuscaCabeleireiro.setIcon(new ImageIcon(ClienteGUI.class.getResource("/com/salaodebeleza/estrutura/imagens/search.png")));
+		
+		btnBuscaCabeleireiro.setMnemonic(KeyEvent.VK_D);
+		btnBuscaCabeleireiro.setToolTipText("Buscar Cabeleireiro");
+		
+		textFieldAnotacoes = new JTextField();
 		
 		textFieldAnotacoes.setColumns(10);
 
@@ -152,67 +170,87 @@ public class ClienteGUI extends JDialog {
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(75)
+					.addGap(103)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblCodigo)
 						.addComponent(lblTelefone)
 						.addComponent(lblNome)
+						.addComponent(lblCodigo)
+						.addComponent(lblCabeleireiro)
 						.addComponent(lblAnotacoes))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(rdbtnAtivo)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(btnIncluir)
-							.addGap(18)
-							.addComponent(btnAlterar)
-							.addGap(18)
-							.addComponent(btnExcluir)
-							.addGap(18)
-							.addComponent(btnSair))
-						.addComponent(textFieldCodigo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(textFieldAnotacoes)
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-									.addComponent(textFieldTelefone, GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
-									.addComponent(textFieldNome, GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)))
-							.addGap(26)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+							.addComponent(rdbtnAtivo)
+							.addContainerGap())
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+							.addGroup(gl_contentPane.createSequentialGroup()
+								.addGap(392)
 								.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-								.addComponent(checkAnotacoes)
-								.addComponent(checkTelefone)
-								.addComponent(checkNome))))
-					.addContainerGap(156, Short.MAX_VALUE))
+								.addContainerGap(54, Short.MAX_VALUE))
+							.addGroup(gl_contentPane.createSequentialGroup()
+								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+									.addComponent(textFieldCabeleireiro, GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
+									.addComponent(textFieldAnotacoes, GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
+									.addComponent(textFieldTelefone, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
+									.addComponent(textFieldCodigo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addComponent(textFieldNome, GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE))
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+									.addComponent(checkAnotacoes)
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+										.addComponent(checkNome, Alignment.TRAILING)
+										.addComponent(checkTelefone, Alignment.TRAILING))
+									.addComponent(btnBuscaCabeleireiro, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
+								.addGap(79)))))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(137)
+					.addComponent(btnIncluir)
+					.addGap(18)
+					.addComponent(btnAlterar)
+					.addGap(18)
+					.addComponent(btnExcluir)
+					.addGap(18)
+					.addComponent(btnSair)
+					.addContainerGap(147, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(62)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblCodigo)
-						.addComponent(textFieldCodigo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNome)
-						.addComponent(textFieldNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(21)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(textFieldCodigo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblCodigo))
+							.addGap(18)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblNome)
+								.addComponent(textFieldNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 						.addComponent(checkNome))
-					.addGap(26)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblTelefone)
-						.addComponent(textFieldTelefone, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(checkTelefone))
+					.addGap(15)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblTelefone)
+							.addGap(6))
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+							.addComponent(textFieldTelefone, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(checkTelefone)))
+					.addGap(8)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblAnotacoes)
+							.addComponent(textFieldAnotacoes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(checkAnotacoes))
+					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(26)
-							.addComponent(checkAnotacoes)
-							.addGap(18)
+							.addComponent(btnBuscaCabeleireiro, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+							.addGap(25)
 							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 0, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(29)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblAnotacoes)
-								.addComponent(textFieldAnotacoes, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE))))
-					.addPreferredGap(ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblCabeleireiro)
+							.addComponent(textFieldCabeleireiro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addGap(7)
 					.addComponent(rdbtnAtivo)
 					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
@@ -220,7 +258,7 @@ public class ClienteGUI extends JDialog {
 						.addComponent(btnAlterar)
 						.addComponent(btnExcluir)
 						.addComponent(btnSair))
-					.addGap(33))
+					.addContainerGap(31, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
 		createEvents();
@@ -378,6 +416,12 @@ public class ClienteGUI extends JDialog {
 				dispose();
 			}
 		});
+		
+		btnBuscaCabeleireiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buscaCabeleireiro();
+			}
+		});
 
 		///////////////////FOCUS////////////////////////////////
 
@@ -415,18 +459,15 @@ public class ClienteGUI extends JDialog {
 		  
 		  } });
 		  
-		 
-		  textFieldAnotacoes.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-			if(verificaDigitacaoAnotacoes()) {
-				textFieldAnotacoes.requestFocus();
-			}
-			else {
-				digitacaoAnotacaoValida();
-			}
-			}
-			
+		  textFieldAnotacoes.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					 if (verificaDigitacaoAnotacoes() ) { 
+					  		textFieldAnotacoes.requestFocus(); 
+					  } 
+					  else {
+						  digitacaoAnotacaoValida(); 
+					  }
+				}
 			});
 
 		////////////////KEY PRESSED///////////////////////////////
@@ -473,25 +514,43 @@ public class ClienteGUI extends JDialog {
 		textFieldAnotacoes.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if ( verificaDigitacaoAnotacoes() ) {
-					textFieldAnotacoes.requestFocus();	
-				} else {
-					digitacaoAnotacaoValida();
-				}	
-				textFieldAnotacoes.requestFocus();
+				if ( e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if ( verificaDigitacaoAnotacoes() ) {
+						textFieldAnotacoes.requestFocus();	
+					} else {
+						digitacaoAnotacaoValida();
+					}	
+				}
 			}
-			
 		});
 
 	}
 
 
 	////////////////////////////////////////////////////////////////////
+	
+protected void buscaCabeleireiro() {
+		
+		cabeleireiro = new Usuario();
+		
+		BuscaCabeleireiro buscaCabeleireiro= new BuscaCabeleireiro(new JFrame(), true);
+		buscaCabeleireiro.setLocationRelativeTo(null);
+		buscaCabeleireiro.setVisible(true);
+		
+		if (buscaCabeleireiro.isSelectUsuario()) {
+			UsuarioService cabeleireiroService = new UsuarioService();
+			cabeleireiro = cabeleireiroService.findById(buscaCabeleireiro.getCodigoUsuario());
+			textFieldCabeleireiro.setText(cabeleireiro.getUsername());
+		}
+		
+	}
 	private void incluir() {
 		
 		Integer toReturn = 0;
 		
 		Cliente cliente = pegarDadosCliente();
+		
+		cliente.setUsuario(cabeleireiro);
 		
 		ClienteService clienteService = new ClienteService();
 		
@@ -542,6 +601,8 @@ public class ClienteGUI extends JDialog {
 		Integer toReturn = 0;
 		
 	    Cliente cliente = pegarDadosCliente();
+	    
+	    cliente.setUsuario(cabeleireiro);
 	    
 	    ClienteService clienteService = new ClienteService();
 		
@@ -605,6 +666,7 @@ public class ClienteGUI extends JDialog {
 		cliente.setNome(textFieldNome.getText());
 		cliente.setTelefone(textFieldTelefone.getText());
 		cliente.setAnotacoes(textFieldAnotacoes.getText());
+		cliente.setUsuario(cabeleireiro);
 		
 		if (rdbtnAtivo.isSelected()) {
 			cliente.setAtivo(true);
@@ -637,6 +699,8 @@ public class ClienteGUI extends JDialog {
 		textFieldTelefone.setText(cliente.getTelefone());
 		textFieldAnotacoes.setText(cliente.getAnotacoes());
 		
+		textFieldCabeleireiro.setText(cliente.getUsuario().getUsername());
+		
 		
 
 		if ( cliente.isAtivo()) 
@@ -649,6 +713,8 @@ public class ClienteGUI extends JDialog {
 		textFieldCodigo.setText(VariaveisProjeto.LIMPA_CAMPO);
 		textFieldNome.setText(VariaveisProjeto.LIMPA_CAMPO);
 		textFieldTelefone.setText(VariaveisProjeto.LIMPA_CAMPO);
+		textFieldAnotacoes.setText(VariaveisProjeto.LIMPA_CAMPO);
+		textFieldCabeleireiro.setText(VariaveisProjeto.LIMPA_CAMPO);
 		rdbtnAtivo.setSelected(false);
 	}
 }

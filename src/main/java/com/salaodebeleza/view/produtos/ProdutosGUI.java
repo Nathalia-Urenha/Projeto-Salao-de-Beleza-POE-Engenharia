@@ -24,7 +24,10 @@ import javax.swing.border.EmptyBorder;
 
 import com.salaodebeleza.estrutura.util.VariaveisProjeto;
 import com.salaodebeleza.model.modells.Produtos;
+import com.salaodebeleza.model.modells.Usuario;
 import com.salaodebeleza.model.service.ProdutosService;
+import com.salaodebeleza.model.service.UsuarioService;
+import com.salaodebeleza.view.usuario.BuscaCabeleireiro;
 
 public class ProdutosGUI extends JDialog {
 
@@ -57,6 +60,11 @@ public class ProdutosGUI extends JDialog {
 	private int linha =0;
 	private int acao = 0;
 	private JTextField textFieldQuantidade;
+	private JLabel lblCabeleireiro;
+	private JTextField textFieldCabeleireiro;
+	private JButton btnBuscarCabeleireiro;
+	
+	private Usuario cabeleireiro;
 	
 	/**
 	 * Create the frame.
@@ -138,7 +146,18 @@ public class ProdutosGUI extends JDialog {
 		
 		
 		textFieldQuantidade.setColumns(10);
-
+		
+		lblCabeleireiro = new JLabel("Cabeleireiro(a):");
+		
+		textFieldCabeleireiro = new JTextField();
+		textFieldCabeleireiro.setColumns(10);
+		textFieldCabeleireiro.setEditable(false);
+		
+		btnBuscarCabeleireiro = new JButton("");
+		btnBuscarCabeleireiro.setIcon(new ImageIcon(ProdutosGUI.class.getResource("/com/salaodebeleza/estrutura/imagens/search.png")));
+		
+		btnBuscarCabeleireiro.setMnemonic(KeyEvent.VK_D);
+		btnBuscarCabeleireiro.setToolTipText("Buscar Cabeleireiro");
 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -151,24 +170,31 @@ public class ProdutosGUI extends JDialog {
 								.addComponent(lblCodigo)
 								.addComponent(lblValor)
 								.addComponent(lblNome)
-								.addComponent(lblQuantidade))
+								.addComponent(lblQuantidade)
+								.addComponent(lblCabeleireiro))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(textFieldCodigo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
+										.addComponent(textFieldCabeleireiro, Alignment.LEADING)
+										.addGroup(Alignment.LEADING, gl_contentPane.createParallelGroup(Alignment.LEADING, false)
 											.addComponent(textFieldValor, GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
 											.addComponent(textFieldNome, GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE))
-										.addComponent(textFieldQuantidade, 315, 315, 315))
-									.addGap(26)
+										.addComponent(textFieldQuantidade, Alignment.LEADING, 315, 315, Short.MAX_VALUE))
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-										.addComponent(checkqtd)
-										.addComponent(checkValor)
-										.addComponent(checkNome)))))
+										.addGroup(gl_contentPane.createSequentialGroup()
+											.addGap(26)
+											.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+												.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+												.addComponent(checkqtd)
+												.addComponent(checkValor)
+												.addComponent(checkNome)))
+										.addGroup(gl_contentPane.createSequentialGroup()
+											.addGap(18)
+											.addComponent(btnBuscarCabeleireiro, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))))))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(113)
+							.addGap(112)
 							.addComponent(btnIncluir)
 							.addGap(18)
 							.addComponent(btnAlterar)
@@ -176,7 +202,7 @@ public class ProdutosGUI extends JDialog {
 							.addComponent(btnExcluir)
 							.addGap(18)
 							.addComponent(btnSair)))
-					.addContainerGap(151, Short.MAX_VALUE))
+					.addContainerGap(85, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -206,13 +232,18 @@ public class ProdutosGUI extends JDialog {
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(textFieldQuantidade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(lblQuantidade))))
-					.addGap(32)
+					.addPreferredGap(ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblCabeleireiro)
+						.addComponent(textFieldCabeleireiro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnBuscarCabeleireiro))
+					.addGap(29)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnIncluir)
 						.addComponent(btnAlterar)
 						.addComponent(btnExcluir)
 						.addComponent(btnSair))
-					.addContainerGap(82, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 		contentPane.setLayout(gl_contentPane);
 		createEvents();
@@ -370,6 +401,12 @@ public class ProdutosGUI extends JDialog {
 			}
 		});
 
+		btnBuscarCabeleireiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buscaCabeleireiro();
+			}
+		});
+		
 		///////////////////FOCUS////////////////////////////////
 
 		
@@ -478,11 +515,30 @@ public class ProdutosGUI extends JDialog {
 
 
 	////////////////////////////////////////////////////////////////////
+	
+protected void buscaCabeleireiro() {
+		
+		cabeleireiro = new Usuario();
+		
+		BuscaCabeleireiro buscaCabeleireiro= new BuscaCabeleireiro(new JFrame(), true);
+		buscaCabeleireiro.setLocationRelativeTo(null);
+		buscaCabeleireiro.setVisible(true);
+		
+		if (buscaCabeleireiro.isSelectUsuario()) {
+			UsuarioService cabeleireiroService = new UsuarioService();
+			cabeleireiro = cabeleireiroService.findById(buscaCabeleireiro.getCodigoUsuario());
+			textFieldCabeleireiro.setText(cabeleireiro.getUsername());
+		}
+		
+	}
+
 	private void incluir() {
 		
 		Integer toReturn = 0;
 		
 		Produtos produtos = pegarDadosProdutos();
+		
+		produtos.setusuario(cabeleireiro);
 		
 		ProdutosService produtosService = new ProdutosService();
 		
@@ -533,6 +589,8 @@ public class ProdutosGUI extends JDialog {
 		Integer toReturn = 0;
 		
 	    Produtos produtos = pegarDadosProdutos();
+	    
+	    produtos.setusuario(cabeleireiro);
 	    
 	    ProdutosService produtosService = new ProdutosService();
 		
@@ -596,6 +654,7 @@ public class ProdutosGUI extends JDialog {
 		produtos.setNome(textFieldNome.getText());
 		produtos.setValor(Float.valueOf(textFieldValor.getText()));
 		produtos.setQtd(Integer.valueOf(textFieldQuantidade.getText()));
+		produtos.setusuario(cabeleireiro);
 		
 		
 		
@@ -624,6 +683,8 @@ public class ProdutosGUI extends JDialog {
 		textFieldValor.setText(String.valueOf(produtos.getValor()));
 		textFieldQuantidade.setText(String.valueOf(produtos.getQtd()));
 		
+		textFieldCabeleireiro.setText(produtos.getusuario().getUsername());
+		
 	
 	}
 
@@ -631,6 +692,8 @@ public class ProdutosGUI extends JDialog {
 		textFieldCodigo.setText(VariaveisProjeto.LIMPA_CAMPO);
 		textFieldNome.setText(VariaveisProjeto.LIMPA_CAMPO);
 		textFieldValor.setText(VariaveisProjeto.LIMPA_CAMPO);
+		textFieldQuantidade.setText(VariaveisProjeto.LIMPA_CAMPO);
+		textFieldCabeleireiro.setText(VariaveisProjeto.LIMPA_CAMPO);
 	}
 
 }

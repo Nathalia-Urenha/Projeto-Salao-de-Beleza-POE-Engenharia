@@ -101,17 +101,16 @@ public class Produtos {
 		this.usuario = usuario;
 	}
 	
-	//MUITOS PARA MUITOS
-	@ManyToMany(mappedBy="produtos")
-	public List<Agendamento> getAgendamento() {
-		return agendamento;
-	}
-
-
-	public void setAgendamento(List<Agendamento> agendamento) {
-		this.agendamento = agendamento;
-	}
-
+	
+	  //MUITOS PARA MUITOS
+	  
+	  @ManyToMany(mappedBy="produtos") public List<Agendamento> getAgendamento() {
+	  return agendamento; }
+	  
+	  
+	  public void setAgendamento(List<Agendamento> agendamento) { this.agendamento
+	  = agendamento; }
+	 
 //////////////////////////////////////////////////////////////////////////////////	
 	
 	@Override

@@ -106,52 +106,49 @@ public class Agendamento {
 
 ///////////////////////RELACIONAMENTOS//////////////////////
 	
-	//MUITOS PARA UM - CLIENTE
-	@ManyToOne
-	@JoinColumn(name = "CLIENTE_ID", nullable = false)
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-	
-	//MUITOS PARA UM - USUARIO
-	@ManyToOne
-	@JoinColumn(name = "USUARIO_ID", nullable = false)
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-	
-	//MUITOS PARA MUITOS - PROCEDIMENTOS
-	@ManyToMany
-	@JoinTable(name = "TAB_PROCEDIMENTOS_AGENDAMENTO", joinColumns = @JoinColumn(name = "AGENDAMENTO_ID"),
-	inverseJoinColumns = @JoinColumn(name="PROCEDIMENTO_ID"))
-	public List<Procedimentos> getProcedimentos() {
-		return procedimentos;
-	}
-
-	public void setProcedimentos(List<Procedimentos> procedimentos) {
-		this.procedimentos = procedimentos;
-	}
-	
-	//MUITOS PARA MUITOS - PRODUTOS
-	@ManyToMany
-	@JoinTable(name = "TAB_PRODUTOS_AGENDAMENTO", joinColumns = @JoinColumn(name = "AGENDAMENTO_ID"),
-	inverseJoinColumns = @JoinColumn(name="PRODUTO_ID"))
-	public List<Produtos> getProdutos() {
-		return produtos;
-	}
-
-	public void setProdutos(List<Produtos> produtos) {
-		this.produtos = produtos;
-	}
-
+	/*
+	 * //MUITOS PARA UM - CLIENTE
+	 * 
+	 * @ManyToOne
+	 * 
+	 * @JoinColumn(name = "CLIENTE_ID", nullable = false) public Cliente
+	 * getCliente() { return cliente; }
+	 * 
+	 * public void setCliente(Cliente cliente) { this.cliente = cliente; }
+	 * 
+	 * //MUITOS PARA UM - USUARIO
+	 * 
+	 * @ManyToOne
+	 * 
+	 * @JoinColumn(name = "USUARIO_ID", nullable = false) public Usuario
+	 * getUsuario() { return usuario; }
+	 * 
+	 * public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+	 * 
+	 * //MUITOS PARA MUITOS - PROCEDIMENTOS
+	 * 
+	 * @ManyToMany
+	 * 
+	 * @JoinTable(name = "TAB_PROCEDIMENTOS_AGENDAMENTO", joinColumns
+	 * = @JoinColumn(name = "AGENDAMENTO_ID"), inverseJoinColumns
+	 * = @JoinColumn(name="PROCEDIMENTO_ID")) public List<Procedimentos>
+	 * getProcedimentos() { return procedimentos; }
+	 * 
+	 * public void setProcedimentos(List<Procedimentos> procedimentos) {
+	 * this.procedimentos = procedimentos; }
+	 */
+	  //MUITOS PARA MUITOS - PRODUTOS
+	  
+	  @ManyToMany
+	  
+	  @JoinTable(name = "TAB_PRODUTOS_AGENDAMENTO", joinColumns = @JoinColumn(name
+	  = "AGENDAMENTO_ID"), inverseJoinColumns = @JoinColumn(name="PRODUTO_ID"))
+	  public List<Produtos> getProdutos() { return produtos; }
+	  
+	  public void setProdutos(List<Produtos> produtos) { this.produtos = produtos;
+	  }
+	 
+///////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public int hashCode() {
 		final int prime = 31;
