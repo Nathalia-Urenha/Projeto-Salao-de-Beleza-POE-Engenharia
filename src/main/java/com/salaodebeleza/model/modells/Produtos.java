@@ -104,12 +104,12 @@ public class Produtos {
 	
 	  //MUITOS PARA MUITOS
 	  
-	  @ManyToMany(mappedBy="produtos") public List<Agendamento> getAgendamento() {
+	 /* @ManyToMany(mappedBy="produtos") public List<Agendamento> getAgendamento() {
 	  return agendamento; }
 	  
 	  
 	  public void setAgendamento(List<Agendamento> agendamento) { this.agendamento
-	  = agendamento; }
+	  = agendamento; }*/
 	 
 //////////////////////////////////////////////////////////////////////////////////	
 	

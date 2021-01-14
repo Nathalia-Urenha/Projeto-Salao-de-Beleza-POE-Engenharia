@@ -30,6 +30,9 @@ import com.salaodebeleza.model.modells.Usuario;
 import com.salaodebeleza.model.service.ClienteService;
 import com.salaodebeleza.model.service.UsuarioService;
 import com.salaodebeleza.view.usuario.BuscaCabeleireiro;
+import com.salaodebeleza.view.usuario.RelUsuario;
+
+import javax.swing.border.BevelBorder;
 
 
 public class ClienteGUI extends JDialog {
@@ -70,6 +73,7 @@ public class ClienteGUI extends JDialog {
 	
 	private Usuario cabeleireiro;
 	private JTextField textFieldAnotacoes;
+	private JButton btnRelatorio;
 	
 	/**
 	 * Create the frame.
@@ -164,6 +168,11 @@ public class ClienteGUI extends JDialog {
 		textFieldAnotacoes = new JTextField();
 		
 		textFieldAnotacoes.setColumns(10);
+		
+		btnRelatorio = new JButton("Relat\u00F3rio");
+		
+		btnRelatorio.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		btnRelatorio.setIcon(new ImageIcon(ClienteGUI.class.getResource("/com/salaodebeleza/estrutura/imagens/pdf.png")));
 
 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
@@ -178,30 +187,33 @@ public class ClienteGUI extends JDialog {
 						.addComponent(lblCabeleireiro)
 						.addComponent(lblAnotacoes))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(textFieldCabeleireiro, GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
+								.addComponent(textFieldAnotacoes, GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
+								.addComponent(textFieldTelefone, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
+								.addComponent(textFieldCodigo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textFieldNome, GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(checkAnotacoes)
+								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+									.addComponent(checkNome, Alignment.TRAILING)
+									.addComponent(checkTelefone, Alignment.TRAILING))
+								.addComponent(btnBuscaCabeleireiro, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
+							.addGap(79))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(rdbtnAtivo)
-							.addContainerGap())
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-							.addGroup(gl_contentPane.createSequentialGroup()
-								.addGap(392)
-								.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-								.addContainerGap(54, Short.MAX_VALUE))
-							.addGroup(gl_contentPane.createSequentialGroup()
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-									.addComponent(textFieldCabeleireiro, GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
-									.addComponent(textFieldAnotacoes, GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
-									.addComponent(textFieldTelefone, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
-									.addComponent(textFieldCodigo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addComponent(textFieldNome, GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE))
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-									.addComponent(checkAnotacoes)
-									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addComponent(checkNome, Alignment.TRAILING)
-										.addComponent(checkTelefone, Alignment.TRAILING))
-									.addComponent(btnBuscaCabeleireiro, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
-								.addGap(79)))))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED, 341, Short.MAX_VALUE)
+									.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+									.addGap(54))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(79)
+									.addComponent(btnRelatorio, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
+									.addContainerGap())))))
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(137)
 					.addComponent(btnIncluir)
@@ -246,19 +258,21 @@ public class ClienteGUI extends JDialog {
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(btnBuscaCabeleireiro, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
 							.addGap(25)
-							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 0, GroupLayout.PREFERRED_SIZE))
+							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 0, GroupLayout.PREFERRED_SIZE)
+							.addGap(7)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(rdbtnAtivo)
+								.addComponent(btnRelatorio, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 							.addComponent(lblCabeleireiro)
 							.addComponent(textFieldCabeleireiro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addGap(7)
-					.addComponent(rdbtnAtivo)
 					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnIncluir)
 						.addComponent(btnAlterar)
 						.addComponent(btnExcluir)
 						.addComponent(btnSair))
-					.addContainerGap(31, Short.MAX_VALUE))
+					.addContainerGap(42, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
 		createEvents();
@@ -422,6 +436,12 @@ public class ClienteGUI extends JDialog {
 				buscaCabeleireiro();
 			}
 		});
+		
+		btnRelatorio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				imprimeRelatorio();
+			}
+		});
 
 		///////////////////FOCUS////////////////////////////////
 
@@ -529,6 +549,8 @@ public class ClienteGUI extends JDialog {
 
 	////////////////////////////////////////////////////////////////////
 	
+
+
 protected void buscaCabeleireiro() {
 		
 		cabeleireiro = new Usuario();
@@ -654,6 +676,7 @@ protected void buscaCabeleireiro() {
 		
 		Cliente cliente = new Cliente();
 		
+		cliente = tabelaClienteModel.getCliente(this.linha);
 		
 		if (VariaveisProjeto.digitacaoCampo(textFieldCodigo.getText())){
 		 textFieldCodigo.requestFocus(); 
@@ -667,6 +690,8 @@ protected void buscaCabeleireiro() {
 		cliente.setTelefone(textFieldTelefone.getText());
 		cliente.setAnotacoes(textFieldAnotacoes.getText());
 		cliente.setUsuario(cabeleireiro);
+		
+		//colocar coisas igual departamento na view usuario do professor
 		
 		if (rdbtnAtivo.isSelected()) {
 			cliente.setAtivo(true);
@@ -717,6 +742,16 @@ protected void buscaCabeleireiro() {
 		textFieldCabeleireiro.setText(VariaveisProjeto.LIMPA_CAMPO);
 		rdbtnAtivo.setSelected(false);
 	}
+	
+	protected void imprimeRelatorio() {
+		RelCliente relCliente = new RelCliente(new JFrame(), true);
+		relCliente.setLocationRelativeTo(null);
+		setVisible(false);
+		relCliente.setVisible(true);
+		
+		
+	}
+
 }
 
 

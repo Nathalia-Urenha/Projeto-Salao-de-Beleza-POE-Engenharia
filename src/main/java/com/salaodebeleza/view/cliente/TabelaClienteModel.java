@@ -17,13 +17,14 @@ public class TabelaClienteModel extends AbstractTableModel {
 
 
 
-private final String colunas[] = {"Código","Nome","Telefone", "Anotacoes"};
+private final String colunas[] = {"Código","Nome","Telefone", "Anotacoes", "Cabeleireiro"};
 	
 	
 	private static final int CODIGO = 0;
 	private static final int NOME = 1;
 	private static final int TELEFONE = 2;
 	private static final int ANOTACOES =3;
+	private static final int CABELEIREIRO = 4;
 	
 	private List<Cliente> listaCliente;
 	
@@ -89,10 +90,10 @@ private final String colunas[] = {"Código","Nome","Telefone", "Anotacoes"};
 			return usuario.getTelefone();
 		case ANOTACOES:
 			return usuario.getAnotacoes();
+		case CABELEIREIRO:
+			return usuario.getUsuario().getUsername();
 		default:
 			return usuario;
-			
-			
 		}
 	}
 	
@@ -106,6 +107,8 @@ private final String colunas[] = {"Código","Nome","Telefone", "Anotacoes"};
 		case TELEFONE:
 			return String.class;
 		case ANOTACOES:
+			return String.class;
+		case CABELEIREIRO:
 			return String.class;
 		default:
 			return null;

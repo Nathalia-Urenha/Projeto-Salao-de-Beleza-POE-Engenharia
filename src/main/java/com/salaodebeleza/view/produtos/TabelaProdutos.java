@@ -34,6 +34,7 @@ import javax.swing.table.TableRowSorter;
 import com.salaodebeleza.estrutura.util.VariaveisProjeto;
 import com.salaodebeleza.model.modells.Produtos;
 import com.salaodebeleza.model.service.ProdutosService;
+import com.salaodebeleza.view.cliente.ClienteGUI;
 
 
 public class TabelaProdutos extends JInternalFrame {
@@ -131,6 +132,7 @@ public class TabelaProdutos extends JInternalFrame {
 		btnAlterar.setIcon(new ImageIcon(TabelaProdutos.class.getResource("/com/salaodebeleza/estrutura/imagens/book_edit.png")));
 		
 		btnExcluir = new JButton("Excluir");
+		
 		btnExcluir.setMnemonic(KeyEvent.VK_E);
 		btnExcluir.setIcon(new ImageIcon(TabelaProdutos.class.getResource("/com/salaodebeleza/estrutura/imagens/book_delete.png")));
 		
@@ -352,7 +354,7 @@ public class TabelaProdutos extends JInternalFrame {
 		
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				alerarProdutos();
+				alterarProdutos();
 				iniciaPaginacao();
 			}
 
@@ -360,6 +362,13 @@ public class TabelaProdutos extends JInternalFrame {
 		
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				excluirProduto();
+				iniciaPaginacao();
 			}
 		});
 		
@@ -398,10 +407,20 @@ public class TabelaProdutos extends JInternalFrame {
 		usuario.setVisible(true);
 	}
 	
-	private void alerarProdutos() {
+	private void alterarProdutos() {
 		if(tabelaProdutos.getSelectedRow()!= -1 && tabelaProdutos.getSelectedRow() < tabelaProdutosModel.getRowCount()) {
 			int linha = tabelaProdutos.getSelectedRow();
 			ProdutosGUI usuario = new ProdutosGUI(new JFrame(), true, tabelaProdutos, tabelaProdutosModel, linha, VariaveisProjeto.ALTERACAO);
+			usuario.setLocationRelativeTo(null);
+			usuario.setVisible(true);
+		}
+		
+	}
+	
+	private void excluirProduto() {
+		if(tabelaProdutos.getSelectedRow()!= -1 && tabelaProdutos.getSelectedRow() < tabelaProdutosModel.getRowCount()) {
+			int linha = tabelaProdutos.getSelectedRow();
+			ProdutosGUI usuario = new ProdutosGUI(new JFrame(), true, tabelaProdutos, tabelaProdutosModel, linha, VariaveisProjeto.EXCLUSAO);
 			usuario.setLocationRelativeTo(null);
 			usuario.setVisible(true);
 		}
@@ -464,8 +483,8 @@ public class TabelaProdutos extends JInternalFrame {
 			tabelaProdutos.getColumnModel().getColumn(EMAIL).setWidth(100);
 			
 			lblInicio.setText(String.valueOf(numeroPagina));
-			lblt.setText(String.valueOf(totalPagina));
-			lblfinal.setText(String.valueOf(totalData));
+			lblfinal.setText(String.valueOf(totalPagina));
+			totalRegistros.setText(String.valueOf(totalData));
 		
 	}
 

@@ -1,6 +1,7 @@
 package com.salaodebeleza.model.modells;
 
 import java.util.Date;
+
 import java.util.List;
 
 import javax.persistence.Column;
@@ -20,7 +21,7 @@ public class Agendamento {
 	
 	private Integer id;
 	private Date data;
-	private Date hora;
+	private String hora;
 	private float valorProcedimento;
 	private float valorProduto;
 	private float valorTotal;
@@ -37,7 +38,7 @@ public class Agendamento {
 		
 	}
 
-	public Agendamento(Integer id, Date data, Date hora, float valorProcedimento, float valorProduto,
+	public Agendamento(Integer id, Date data, String hora, float valorProcedimento, float valorProduto,
 			float valorTotal) {
 		super();
 		this.id = id;
@@ -59,7 +60,7 @@ public class Agendamento {
 		this.id = id;
 	}
 
-	@Column(name="PROCEDIMENTO_DATA", nullable = false)
+	@Column(name="AGENDAMENTO_DATA", nullable = false)
 	public Date getData() {
 		return data;
 	}
@@ -68,12 +69,12 @@ public class Agendamento {
 		this.data = data;
 	}
 	
-	@Column(name="PROCEDIMENTO_HORA", nullable = false)
-	public Date getHora() {
+	@Column(name="AGENDAMENTO_HORA", nullable = false)
+	public String getHora() {
 		return hora;
 	}
 
-	public void setHora(Date hora) {
+	public void setHora(String hora) {
 		this.hora = hora;
 	}
 
@@ -106,47 +107,57 @@ public class Agendamento {
 
 ///////////////////////RELACIONAMENTOS//////////////////////
 	
-	/*
-	 * //MUITOS PARA UM - CLIENTE
-	 * 
-	 * @ManyToOne
-	 * 
-	 * @JoinColumn(name = "CLIENTE_ID", nullable = false) public Cliente
-	 * getCliente() { return cliente; }
-	 * 
-	 * public void setCliente(Cliente cliente) { this.cliente = cliente; }
-	 * 
-	 * //MUITOS PARA UM - USUARIO
-	 * 
-	 * @ManyToOne
-	 * 
-	 * @JoinColumn(name = "USUARIO_ID", nullable = false) public Usuario
-	 * getUsuario() { return usuario; }
-	 * 
-	 * public void setUsuario(Usuario usuario) { this.usuario = usuario; }
-	 * 
-	 * //MUITOS PARA MUITOS - PROCEDIMENTOS
-	 * 
-	 * @ManyToMany
-	 * 
-	 * @JoinTable(name = "TAB_PROCEDIMENTOS_AGENDAMENTO", joinColumns
-	 * = @JoinColumn(name = "AGENDAMENTO_ID"), inverseJoinColumns
-	 * = @JoinColumn(name="PROCEDIMENTO_ID")) public List<Procedimentos>
-	 * getProcedimentos() { return procedimentos; }
-	 * 
-	 * public void setProcedimentos(List<Procedimentos> procedimentos) {
-	 * this.procedimentos = procedimentos; }
-	 */
+	
+	  //MUITOS PARA UM - CLIENTE
+	  
+		/*
+		 * @ManyToOne
+		 * 
+		 * @JoinColumn(name = "CLIENTE_ID", nullable = false) public Cliente
+		 * getCliente() { return cliente; }
+		 * 
+		 * public void setCliente(Cliente cliente) { this.cliente = cliente; }
+		 */
+	
+	  //MUITOS PARA UM - USUARIO
+	  
+	  @ManyToOne
+	  @JoinColumn(name = "USUARIO_ID", nullable = false) 
+	  public Usuario getUsuario() { 
+		  return usuario; 
+		  }
+	  
+	  public void setUsuario(Usuario usuario) {
+		  this.usuario = usuario; 
+	
+	  }
+	  
+	  //MUITOS PARA MUITOS - PROCEDIMENTOS
+	  
+		/*
+		 * @ManyToMany
+		 * 
+		 * @JoinTable(name = "TAB_PROCEDIMENTOS_AGENDAMENTO", joinColumns
+		 * = @JoinColumn(name = "AGENDAMENTO_ID"), inverseJoinColumns
+		 * = @JoinColumn(name="PROCEDIMENTO_ID")) public List<Procedimentos>
+		 * getProcedimentos() { return procedimentos; }
+		 * 
+		 * public void setProcedimentos(List<Procedimentos> procedimentos) {
+		 * this.procedimentos = procedimentos; }
+		 */
+	 
 	  //MUITOS PARA MUITOS - PRODUTOS
 	  
-	  @ManyToMany
-	  
-	  @JoinTable(name = "TAB_PRODUTOS_AGENDAMENTO", joinColumns = @JoinColumn(name
-	  = "AGENDAMENTO_ID"), inverseJoinColumns = @JoinColumn(name="PRODUTO_ID"))
-	  public List<Produtos> getProdutos() { return produtos; }
-	  
-	  public void setProdutos(List<Produtos> produtos) { this.produtos = produtos;
-	  }
+		/*
+		 * @ManyToMany
+		 * 
+		 * @JoinTable(name = "TAB_PRODUTOS_AGENDAMENTO", joinColumns = @JoinColumn(name
+		 * = "AGENDAMENTO_ID"), inverseJoinColumns = @JoinColumn(name="PRODUTO_ID"))
+		 * public List<Produtos> getProdutos() { return produtos; }
+		 * 
+		 * public void setProdutos(List<Produtos> produtos) { this.produtos = produtos;
+		 * }
+		 */
 	 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 	@Override

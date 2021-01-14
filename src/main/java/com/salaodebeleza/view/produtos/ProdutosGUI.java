@@ -615,20 +615,20 @@ protected void buscaCabeleireiro() {
 	}
 	
 	private void erroDigitacao(Integer toReturn) {
-		if ( toReturn == VariaveisProjeto.CLIENTE_NOME) {
+		if ( toReturn == VariaveisProjeto.PRODUTO_NOME) {
 			 status = false;
 			 mudaStatusCheckNome();
 			 showMensagem("Erro na digitação do Nome, verifique!","Erro", JOptionPane.ERROR_MESSAGE);
 		}
-		if ( toReturn == VariaveisProjeto.CLIENTE_TELEFONE ) {
+		if ( toReturn == VariaveisProjeto.PRODUTO_QTD ) {
 			 status = false;
-			 mudaStatusCheckValor(); // mudei aqui antes era mudaStatusCheckNome();
-			 showMensagem("Erro na digitação do Valor, verifique!","Erro", JOptionPane.ERROR_MESSAGE);
+			 mudaStatusCheckQtd();
+			 showMensagem("Erro na digitação da quantidade, verifique!","Erro", JOptionPane.ERROR_MESSAGE);
 		}
-		if ( toReturn == VariaveisProjeto.CLIENTE_ANOTACOES ) {
+		if ( toReturn == VariaveisProjeto.PRODUTO_VALOR ) {
 			 status = false;
-			 mudaStatusCheckQtd(); // mudei aqui antes era mudaStatusCheckNome();
-			 showMensagem("Erro na digitação das Anotações, verifique!","Erro", JOptionPane.ERROR_MESSAGE);
+			 mudaStatusCheckValor(); 
+			 showMensagem("Erro na digitação do valor, verifique!","Erro", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	

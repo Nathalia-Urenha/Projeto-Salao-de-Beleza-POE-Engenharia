@@ -17,7 +17,9 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.EmptyBorder;
 
 import com.salaodebeleza.main.Login;
+import com.salaodebeleza.view.agendamento.TabelaAgendamento;
 import com.salaodebeleza.view.cliente.TabelaCliente;
+import com.salaodebeleza.view.procedimentos.TabelaProcedimentos;
 import com.salaodebeleza.view.produtos.TabelaProdutos;
 import com.salaodebeleza.view.usuario.TabelaCabeleireiro;
 
@@ -39,6 +41,8 @@ public class Menu extends JFrame {
 	private JMenuItem mntmSairSistema;
 	private JMenuItem mntmCliente;
 	private JMenuItem mntmProdutos;
+	private JMenuItem mntmProcedimentos;
+	private JMenuItem mntmAgendamentos;
 
 	/**
 	 * Launch the application.
@@ -63,6 +67,14 @@ public class Menu extends JFrame {
 		
 		mnArquivo = new JMenu("Arquivo");
 		menuBar.add(mnArquivo);
+		
+		mntmAgendamentos = new JMenuItem("Agendamentos");
+		
+		mnArquivo.add(mntmAgendamentos);
+		
+		mntmProcedimentos = new JMenuItem("Procedimentos");
+		
+		mnArquivo.add(mntmProcedimentos);
 		
 		mntmProdutos = new JMenuItem("Produtos");
 		
@@ -150,6 +162,22 @@ public class Menu extends JFrame {
 				TabelaProdutos tabelaProdutos = new TabelaProdutos();
 				contentPane.add(tabelaProdutos);
 				tabelaProdutos.setVisible(true);
+			}
+		});
+		
+		mntmProcedimentos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TabelaProcedimentos tabelaProcedimentos = new TabelaProcedimentos();
+				contentPane.add(tabelaProcedimentos);
+				tabelaProcedimentos.setVisible(true);
+			}
+		});
+		
+		mntmAgendamentos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TabelaAgendamento tabelaAgendamento = new TabelaAgendamento();
+				contentPane.add(tabelaAgendamento);
+				tabelaAgendamento.setVisible(true);
 			}
 		});
 		

@@ -2,6 +2,7 @@ package com.salaodebeleza.model.service;
 
 import javax.persistence.EntityManager;
 
+
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 
@@ -11,6 +12,7 @@ import com.salaodebeleza.estrutura.util.VariaveisProjeto;
 
 
 public abstract class ConexaoBancoService {
+	
 	@PersistenceContext(unitName = VariaveisProjeto.PERSISTENCE_UNIT_NAME)
 	private final EntityManager entityManager;
 	

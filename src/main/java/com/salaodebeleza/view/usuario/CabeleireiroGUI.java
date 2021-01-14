@@ -1,37 +1,46 @@
 package com.salaodebeleza.view.usuario;
 
-import javax.swing.JFrame;
-
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import com.salaodebeleza.model.modells.Produtos;
-import com.salaodebeleza.view.usuario.CabeleireiroGUI;
-import com.salaodebeleza.estrutura.util.VariaveisProjeto;
-import com.salaodebeleza.model.modells.Usuario;
-import com.salaodebeleza.model.service.UsuarioService;
-import com.salaodebeleza.view.usuario.CabeleireiroGUI;
-
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.SwingConstants;
-
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import javax.swing.JRadioButton;
-import javax.swing.JTable;
-import javax.swing.ImageIcon;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Objects;
+
+import javax.imageio.ImageIO;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
+
+import com.salaodebeleza.estrutura.util.VariaveisProjeto;
+import com.salaodebeleza.estrutura.util.imagem.ImageFilter;
+import com.salaodebeleza.estrutura.util.imagem.ImagePreview;
+import com.salaodebeleza.model.modells.Foto;
+import com.salaodebeleza.model.modells.Produtos;
+import com.salaodebeleza.model.modells.Usuario;
+import com.salaodebeleza.model.service.LocalFotoStorageService;
+import com.salaodebeleza.model.service.UsuarioService;
 
 public class CabeleireiroGUI extends JDialog {
 
@@ -43,6 +52,7 @@ public class CabeleireiroGUI extends JDialog {
 	private JButton btnAlterar;
 	private JButton btnExcluir;
 	private JRadioButton rdbtnAtivo;
+	private JButton btnRelatorio;
 
 	private JButton btnSair;
 	private JPasswordField passwordFieldSenha;
@@ -54,6 +64,10 @@ public class CabeleireiroGUI extends JDialog {
 	private JLabel checkNome;
 	private JLabel checkEmail;
 	private JLabel checkSenha;
+	private JButton btnFoto;
+	private JButton btnExcluirFoto;
+	private JLabel lblFoto;
+	private JPanel panel;
 
 	private boolean status = true; 
 
@@ -62,6 +76,8 @@ public class CabeleireiroGUI extends JDialog {
 	
 	private int linha =0;
 	private int acao = 0;
+	
+	private String nomeFoto;
 	
 	/**
 	 * Create the frame.
@@ -78,7 +94,7 @@ public class CabeleireiroGUI extends JDialog {
 		
 		setTitle("Cadastro de Cabeleireiro(a)");
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 690, 414);
+		setBounds(100, 100, 767, 414);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -142,77 +158,129 @@ public class CabeleireiroGUI extends JDialog {
 		btnNewButton.setMnemonic(KeyEvent.VK_D);
 		btnNewButton.setToolTipText("Buscar produtos");
 		btnNewButton.setIcon(new ImageIcon(CabeleireiroGUI.class.getResource("/com/salaodebeleza/estrutura/imagens/search.png")));
+		
+		panel = new JPanel();
+		panel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		
+		lblFoto = new JLabel("");
+		lblFoto.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		
+		btnFoto = new JButton("");
+		
+		btnFoto.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		btnFoto.setIcon(new ImageIcon(CabeleireiroGUI.class.getResource("/com/salaodebeleza/estrutura/imagens/camera-dslr.png")));
+		
+		btnExcluirFoto = new JButton("");
+		
+		btnExcluirFoto.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		btnExcluirFoto.setIcon(new ImageIcon(CabeleireiroGUI.class.getResource("/com/salaodebeleza/estrutura/imagens/iconFechar.png")));
 
 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(75)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblCodigo)
-						.addComponent(lblSenha)
-						.addComponent(lblEmail)
-						.addComponent(lblNome))
-					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(32)
 							.addComponent(btnIncluir)
 							.addGap(18)
 							.addComponent(btnAlterar)
 							.addGap(18)
 							.addComponent(btnExcluir)
 							.addGap(18)
-							.addComponent(btnSair))
-						.addComponent(rdbtnAtivo)
-						.addComponent(textFieldCodigo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnSair)
+							.addGap(18)
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(textFieldEmail, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
-								.addComponent(textFieldNome, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
-								.addComponent(passwordFieldSenha, Alignment.LEADING))
-							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGap(75)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+								.addComponent(lblCodigo)
+								.addComponent(lblSenha)
+								.addComponent(lblEmail)
+								.addComponent(lblNome))
+							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-								.addComponent(checkSenha)
-								.addComponent(checkEmail)
-								.addComponent(checkNome))))
-					.addContainerGap(171, Short.MAX_VALUE))
+								.addComponent(textFieldCodigo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+									.addComponent(rdbtnAtivo)
+									.addGroup(gl_contentPane.createSequentialGroup()
+										.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
+											.addComponent(textFieldEmail, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+											.addComponent(textFieldNome, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+											.addComponent(passwordFieldSenha, Alignment.LEADING))
+										.addPreferredGap(ComponentPlacement.UNRELATED)
+										.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+											.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+											.addComponent(checkSenha)
+											.addComponent(checkEmail)
+											.addComponent(checkNome)))))
+							.addGap(60)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(btnFoto, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)
+									.addGap(31)
+									.addComponent(btnExcluirFoto, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+								.addComponent(lblFoto, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap(48, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(62)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblCodigo)
-						.addComponent(textFieldCodigo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNome)
-						.addComponent(textFieldNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(checkNome))
-					.addGap(26)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblEmail)
-						.addComponent(textFieldEmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(checkEmail))
-					.addGap(26)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblSenha)
-						.addComponent(passwordFieldSenha, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(checkSenha))
-					.addGap(18)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(62)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblCodigo)
+								.addComponent(textFieldCodigo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGap(18)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblNome)
+								.addComponent(textFieldNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(checkNome))
+							.addGap(26)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblEmail)
+								.addComponent(textFieldEmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(checkEmail))
+							.addGap(26)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblSenha)
+								.addComponent(passwordFieldSenha, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(checkSenha))
+							.addGap(18)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 0, GroupLayout.PREFERRED_SIZE)
+								.addComponent(rdbtnAtivo)))
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(lblFoto, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(btnExcluirFoto, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnFoto, GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE))
+							.addGap(23)))
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 0, GroupLayout.PREFERRED_SIZE)
-						.addComponent(rdbtnAtivo))
-					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnIncluir)
-						.addComponent(btnAlterar)
-						.addComponent(btnExcluir)
-						.addComponent(btnSair))
-					.addContainerGap(69, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(18)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnIncluir)
+								.addComponent(btnAlterar)
+								.addComponent(btnExcluir)
+								.addComponent(btnSair)))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(9)
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(57, Short.MAX_VALUE))
 		);
+		panel.setLayout(null);
+		
+		btnRelatorio = new JButton("Relat\u00F3rio");
+		
+		btnRelatorio.setIcon(new ImageIcon(CabeleireiroGUI.class.getResource("/com/salaodebeleza/estrutura/imagens/pdf.png")));
+		btnRelatorio.setBounds(7, 7, 99, 28);
+		btnRelatorio.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		panel.add(btnRelatorio);
 		contentPane.setLayout(gl_contentPane);
 		createEvents();
 
@@ -229,6 +297,9 @@ public class CabeleireiroGUI extends JDialog {
 	}
 	
 	
+	
+
+
 	private void configuraAcaoUsuario() {
 		
 		if(this.acao == VariaveisProjeto.INCLUSAO) {
@@ -369,6 +440,24 @@ public class CabeleireiroGUI extends JDialog {
 				dispose();
 			}
 		});
+		
+		btnRelatorio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				imprimeRelatorio();
+			}
+		});
+		
+		btnFoto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				carregaImagem();
+			}
+		});
+		
+		btnExcluirFoto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				excluirFoto();
+			}
+		});
 
 		///////////////////FOCUS////////////////////////////////
 
@@ -479,6 +568,10 @@ public class CabeleireiroGUI extends JDialog {
 	}
 
 
+
+
+
+
 	////////////////////////////////////////////////////////////////////
 	private void incluir() {
 		
@@ -489,6 +582,7 @@ public class CabeleireiroGUI extends JDialog {
 		UsuarioService usuarioService = new UsuarioService();
 		
 		toReturn = usuarioService.save(usuario);
+		
 		
 		erroDigitacao(toReturn);
 		
@@ -604,6 +698,7 @@ public class CabeleireiroGUI extends JDialog {
 		usuario.setUsername(textFieldNome.getText());
 		usuario.setEmail(textFieldEmail.getText());
 		usuario.setPassword(passwordFieldSenha.getText());
+		usuario.setFoto(nomeFoto);
 		
 		if (rdbtnAtivo.isSelected()) {
 			usuario.setAtivo(true);
@@ -630,17 +725,36 @@ public class CabeleireiroGUI extends JDialog {
 		
 		usuario = tabelaUsuarioModel.getUsuario(this.linha);
 		
-		//UsuarioService usuarioService = new UsuarioService();
-
-		//usuario = usuarioService.findById(usuario.getId());
 		
 		textFieldCodigo.setText(String.valueOf(usuario.getId()));
 		textFieldNome.setText(usuario.getUsername());
 		textFieldEmail.setText(usuario.getEmail());
 		passwordFieldSenha.setText(usuario.getPassword());
+		nomeFoto = usuario.getFoto();
+		
+		if(!Objects.isNull(nomeFoto)) {
+			
+			LocalFotoStorageService localFotoStorageService = new LocalFotoStorageService();
+			
+			String fileInput = localFotoStorageService.recuperar(nomeFoto);
+			
+			File file = new File(fileInput);
+			
+			FileInputStream fis;
+			try {
+				fis = new FileInputStream(file);
+				BufferedImage img = ImageIO.read(fis);
+				ImageIcon imagem = new ImageIcon(img);
+				lblFoto.setIcon(imagem);
+				lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
 		
 		
-
+		
 		if ( usuario.isAtivo()) 
 			rdbtnAtivo.setSelected(true); 
 	
@@ -653,5 +767,65 @@ public class CabeleireiroGUI extends JDialog {
 		textFieldEmail.setText(VariaveisProjeto.LIMPA_CAMPO);
 		passwordFieldSenha.setText(VariaveisProjeto.LIMPA_CAMPO);
 		rdbtnAtivo.setSelected(false);
+	
+	}
+	
+	protected void imprimeRelatorio() {
+		
+		RelUsuario relUsuario = new RelUsuario(new JFrame(), true);
+		relUsuario.setLocationRelativeTo(null);
+		setVisible(false);
+		relUsuario.setVisible(true);
+		
+	}
+	
+	protected void carregaImagem() {
+		JFileChooser fc = new JFileChooser();
+		fc.addChoosableFileFilter(new ImageFilter());
+		fc.setAcceptAllFileFilterUsed(false);
+		fc.setAccessory(new ImagePreview(fc));
+		int returnVal = fc.showDialog(lblFoto, "Anexar");
+		
+		if(lblFoto.getIcon() != null)
+		{
+			excluirFoto();
+		}
+		
+		if(returnVal == JFileChooser.APPROVE_OPTION) {
+			
+			try {
+				File file = fc.getSelectedFile();
+				FileInputStream fin = new FileInputStream(file);
+				BufferedImage img = ImageIO.read(fin);
+				ImageIcon icon = new ImageIcon(img);
+				lblFoto.setIcon(icon);
+				lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
+				LocalFotoStorageService localFotoStorageService = new LocalFotoStorageService();
+				
+				Foto foto = new Foto();
+				
+				foto.setNomeArquivo(file.getName());
+				foto.setInputStraeam(fin);
+				foto.setFile(file);
+				
+				nomeFoto = localFotoStorageService.armazenar(foto);
+				
+			} catch (IOException e) {
+	
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	protected void excluirFoto() {
+		Usuario usuario = tabelaUsuarioModel.getUsuario(this.linha);
+		nomeFoto = usuario.getFoto();
+		LocalFotoStorageService localFotoStorageService = new LocalFotoStorageService();
+		//erro no remover ou no nome da foto
+		localFotoStorageService.remover(nomeFoto);
+		lblFoto.setIcon(null);
+		lblFoto.revalidate();
+		
 	}
 }

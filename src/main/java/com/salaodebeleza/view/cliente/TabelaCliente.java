@@ -131,6 +131,7 @@ public class TabelaCliente extends JInternalFrame {
 		btnAlterar.setIcon(new ImageIcon(TabelaCliente.class.getResource("/com/salaodebeleza/estrutura/imagens/book_edit.png")));
 		
 		btnExcluir = new JButton("Excluir");
+		
 		btnExcluir.setMnemonic(KeyEvent.VK_E);
 		btnExcluir.setIcon(new ImageIcon(TabelaCliente.class.getResource("/com/salaodebeleza/estrutura/imagens/book_delete.png")));
 		
@@ -352,10 +353,17 @@ public class TabelaCliente extends JInternalFrame {
 		
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				alerarCliente();
+				alterarCliente();
 				iniciaPaginacao();
 			}
 
+		});
+		
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				excluirCliente();
+				iniciaPaginacao();
+			}
 		});
 		
 		btnPesquisar.addActionListener(new ActionListener() {
@@ -398,10 +406,20 @@ public class TabelaCliente extends JInternalFrame {
 		usuario.setVisible(true);
 	}
 	
-	private void alerarCliente() {
+	private void alterarCliente() {
 		if(tabelaCliente.getSelectedRow()!= -1 && tabelaCliente.getSelectedRow() < tabelaClienteModel.getRowCount()) {
 			int linha = tabelaCliente.getSelectedRow();
 			ClienteGUI usuario = new ClienteGUI(new JFrame(), true, tabelaCliente, tabelaClienteModel, linha, VariaveisProjeto.ALTERACAO);
+			usuario.setLocationRelativeTo(null);
+			usuario.setVisible(true);
+		}
+		
+	}
+	
+	private void excluirCliente() {
+		if(tabelaCliente.getSelectedRow()!= -1 && tabelaCliente.getSelectedRow() < tabelaClienteModel.getRowCount()) {
+			int linha = tabelaCliente.getSelectedRow();
+			ClienteGUI usuario = new ClienteGUI(new JFrame(), true, tabelaCliente, tabelaClienteModel, linha, VariaveisProjeto.EXCLUSAO);
 			usuario.setLocationRelativeTo(null);
 			usuario.setVisible(true);
 		}
@@ -464,8 +482,8 @@ public class TabelaCliente extends JInternalFrame {
 			tabelaCliente.getColumnModel().getColumn(EMAIL).setWidth(100);
 			
 			lblInicio.setText(String.valueOf(numeroPagina));
-			lblt.setText(String.valueOf(totalPagina));
-			lblfinal.setText(String.valueOf(totalData));
+			lblfinal.setText(String.valueOf(totalPagina));
+			totalRegistros.setText(String.valueOf(totalData));
 		
 	}
 

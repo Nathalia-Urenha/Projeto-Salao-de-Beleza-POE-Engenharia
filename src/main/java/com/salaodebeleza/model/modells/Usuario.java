@@ -30,7 +30,15 @@ public class Usuario {
 	private List<Procedimentos> procedimentos;
 	private List<Agendamento> agendamento;
 
+	private String foto;
 
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -113,15 +121,18 @@ public class Usuario {
 		this.procedimentos = procedimentos;
 	}
 	
-	/*
-	 * //UM PARA MUITOS - AGENDAMENTO
-	 * 
-	 * @OneToMany(mappedBy="usuario") public List<Agendamento> getAgendamento() {
-	 * return agendamento; }
-	 * 
-	 * public void setAgendamento(List<Agendamento> agendamento) { this.agendamento
-	 * = agendamento; }
-	 */
+	
+	  //UM PARA MUITOS - AGENDAMENTO
+	  
+	  @OneToMany(mappedBy="usuario") 
+	  public List<Agendamento> getAgendamento() {
+		  return agendamento; 
+	  }
+	  
+	  public void setAgendamento(List<Agendamento> agendamento) { 
+		  this.agendamento = agendamento; 
+	  }
+	 
 
 /////////////////////////////////////////////////////////////////////
 

@@ -131,6 +131,7 @@ public class TabelaCabeleireiro extends JInternalFrame {
 		btnAlterar.setIcon(new ImageIcon(TabelaCabeleireiro.class.getResource("/com/salaodebeleza/estrutura/imagens/book_edit.png")));
 		
 		btnExcluir = new JButton("Excluir");
+		
 		btnExcluir.setMnemonic(KeyEvent.VK_E);
 		btnExcluir.setIcon(new ImageIcon(TabelaCabeleireiro.class.getResource("/com/salaodebeleza/estrutura/imagens/book_delete.png")));
 		
@@ -159,44 +160,51 @@ public class TabelaCabeleireiro extends JInternalFrame {
 		btnPesquisar.setToolTipText("Pesquisar usu\u00E1rio cadastrado\r\n");
 		btnPesquisar.setIcon(new ImageIcon(TabelaCabeleireiro.class.getResource("/com/salaodebeleza/estrutura/imagens/search.png")));
 		
-		lblPaginaDe = new JLabel("P\u00E1gina");
+		lblPaginaDe = new JLabel("Pagina");
 		
 		lblInicio = new JLabel("10");
+		
+		lblde = new JLabel("de");
+		
 		
 		lblt = new JLabel("Total de Registros:");
 		
 		lblfinal = new JLabel("50");
 		
-		lblde = new JLabel("de");
+		totalRegistros = new JLabel("");
 		
-		totalRegistros = new JLabel(" ");
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addComponent(lblPaginaDe)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_contentPane.createSequentialGroup()
+									.addContainerGap()
 									.addComponent(lblPagina)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 									.addGap(55)
-									.addComponent(panel, GroupLayout.PREFERRED_SIZE, 267, GroupLayout.PREFERRED_SIZE)))
+									.addComponent(panel, GroupLayout.PREFERRED_SIZE, 267, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED))
+								.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+									.addContainerGap(337, Short.MAX_VALUE)
+									.addComponent(lblPaginaDe)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(lblInicio)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(lblde)
+									.addPreferredGap(ComponentPlacement.RELATED)))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblInicio)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(lblde)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(lblfinal)
-							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGap(24)
 							.addComponent(lblt)
-							.addPreferredGap(ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(totalRegistros)
-							.addGap(12))
-						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+							.addGap(39))
+						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGap(107)
@@ -214,7 +222,7 @@ public class TabelaCabeleireiro extends JInternalFrame {
 									.addComponent(textFielPesquisar, GroupLayout.PREFERRED_SIZE, 314, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(btnPesquisar, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)))
-							.addPreferredGap(ComponentPlacement.RELATED, 153, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED, 115, Short.MAX_VALUE))
 						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE))
 					.addGap(37))
 		);
@@ -236,12 +244,12 @@ public class TabelaCabeleireiro extends JInternalFrame {
 						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(totalRegistros)
+						.addComponent(lblt)
 						.addComponent(lblPaginaDe)
 						.addComponent(lblInicio)
 						.addComponent(lblde)
 						.addComponent(lblfinal, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblt))
+						.addComponent(totalRegistros))
 					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnIncluir)
@@ -358,6 +366,13 @@ public class TabelaCabeleireiro extends JInternalFrame {
 
 		});
 		
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				excluirUsuario();
+				iniciaPaginacao();
+			}
+		});
+		
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -402,6 +417,16 @@ public class TabelaCabeleireiro extends JInternalFrame {
 		if(tabelaUsuario.getSelectedRow()!= -1 && tabelaUsuario.getSelectedRow() < tabelaUsuarioModel.getRowCount()) {
 			int linha = tabelaUsuario.getSelectedRow();
 			CabeleireiroGUI usuario = new CabeleireiroGUI(new JFrame(), true, tabelaUsuario, tabelaUsuarioModel, linha, VariaveisProjeto.ALTERACAO);
+			usuario.setLocationRelativeTo(null);
+			usuario.setVisible(true);
+		}
+		
+	}
+	
+	private void excluirUsuario() {
+		if(tabelaUsuario.getSelectedRow()!= -1 && tabelaUsuario.getSelectedRow() < tabelaUsuarioModel.getRowCount()) {
+			int linha = tabelaUsuario.getSelectedRow();
+			CabeleireiroGUI usuario = new CabeleireiroGUI(new JFrame(), true, tabelaUsuario, tabelaUsuarioModel, linha, VariaveisProjeto.EXCLUSAO);
 			usuario.setLocationRelativeTo(null);
 			usuario.setVisible(true);
 		}
@@ -464,8 +489,8 @@ public class TabelaCabeleireiro extends JInternalFrame {
 			tabelaUsuario.getColumnModel().getColumn(EMAIL).setWidth(100);
 			
 			lblInicio.setText(String.valueOf(numeroPagina));
-			lblt.setText(String.valueOf(totalPagina));
-			lblfinal.setText(String.valueOf(totalData));
+			lblfinal.setText(String.valueOf(totalPagina));
+			totalRegistros.setText(String.valueOf(totalData));
 		
 	}
 

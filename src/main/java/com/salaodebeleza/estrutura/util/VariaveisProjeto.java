@@ -10,6 +10,12 @@ public class VariaveisProjeto {
 	
 	public static final String PERSISTENCE_UNIT_NAME = "salaodebeleza";
 	
+	//configurações para geração de relatório
+	public static final String DIRETORIO_RELATORIO = "reports/";
+	public static final String SUFIXO_RELATORIO_COMPILADO = ".jasper";
+	public static final String SUFIXO_RELARIO_FONTE = ".jrxml";
+	public static final String UPLOAD_DIR="/poe/upload";
+	
 	public static final Integer INCLUSAO = 1;
 	public static final Integer ALTERACAO = 2;
 	public static final Integer EXCLUSAO = 3;
@@ -49,10 +55,9 @@ public class VariaveisProjeto {
 	//classe agendamento
 	public static final Integer AGENDAMENTO_DATA = 211;
 	public static final Integer AGENDAMENTO_HORA = 212;
-	public static final Integer AGENDAMENTO_PROCEDIMENTO = 213;
-	public static final Integer VALOR_PROCEDIMENTO = 214;
-	public static final Integer VALOR_PRODUTO = 215;
-	public static final Integer VALOR_TOTAL = 216;
+	public static final Integer VALOR_PROCEDIMENTO = 213;
+	public static final Integer VALOR_PRODUTO = 214;
+	public static final Integer VALOR_TOTAL = 215;
 	
 	
 
